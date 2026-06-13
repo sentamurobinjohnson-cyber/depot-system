@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Depot Management System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">D</div>
+      <div>
+        <h1>Depot System</h1>
+        <p>Inventory • Sales • Profit/Loss</p>
+      </div>
+    </div>
+    <nav>
+      <a href="#dashboard" class="nav-link active">Dashboard</a>
+      <a href="#items" class="nav-link">Items / Stock</a>
+      <a href="#receive" class="nav-link">Received Items</a>
+      <a href="#sales" class="nav-link">Sales</a>
+      <a href="#expenses" class="nav-link">Expenses</a>
+      <a href="#customers" class="nav-link">Customers</a>
+      <a href="#suppliers" class="nav-link">Suppliers</a>
+      <a href="#reports" class="nav-link">Reports</a>
+      <a href="#backup" class="nav-link">Backup</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h2 id="pageTitle">Dashboard</h2>
+        <p id="pageSubtitle">Today’s business summary</p>
+      </div>
+      <div class="top-actions">
+        <button id="seedBtn" class="secondary">Load Demo Data</button>
+        <button id="printBtn" class="secondary">Print</button>
+      </div>
+    </header>
+
+    <section id="dashboard" class="page active">
+      <div class="cards">
+        <div class="card"><p>Total Sales</p><h3 id="kpiSales">0</h3></div>
+        <div class="card"><p>Total Expenses</p><h3 id="kpiExpenses">0</h3></div>
+        <div class="card"><p>Stock Value</p><h3 id="kpiStock">0</h3></div>
+        <div class="card"><p>Net Profit / Loss</p><h3 id="kpiProfit">0</h3></div>
+      </div>
+      <div class="grid two">
+        <div class="panel">
+          <h3>Low Stock</h3>
+          <div class="table-wrap"><table><thead><tr><th>Item</th><th>Qty</th><th>Unit</th></tr></thead><tbody id="lowStockTable"></tbody></table></div>
+        </div>
+        <div class="panel">
+          <h3>Recent Activity</h3>
+          <div class="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Details</th><th>Amount</th></tr></thead><tbody id="recentTable"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="items" class="page">
+      <div class="panel">
+        <h3>Add / Update Item</h3>
+        <form id="itemForm" class="form-grid">
+          <input type="hidden" id="itemId" />
+          <label>Item Name<input required id="itemName" placeholder="Cement" /></label>
+          <label>Unit Type<input required id="itemUnit" placeholder="bag, kg, box" /></label>
+          <label>Opening Quantity<input required type="number" min="0" step="0.01" id="itemQty" /></label>
+          <label>Cost Price<input required type="number" min="0" step="0.01" id="itemCost" /></label>
+          <label>Retail Price<input required type="number" min="0" step="0.01" id="itemRetail" /></label>
+          <label>Low Stock Alert<input type="number" min="0" step="0.01" id="itemAlert" value="5" /></label>
+          <button type="submit">Save Item</button>
+          <button type="button" class="secondary" id="clearItemForm">Clear</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h3>Stock List</h3>
+        <input class="search" id="itemSearch" placeholder="Search items..." />
+        <div class="table-wrap"><table><thead><tr><th>Item</th><th>Qty</th><th>Unit</th><th>Cost</th><th>Retail</th><th>Profit/Unit</th><th>Margin</th><th>Actions</th></tr></thead><tbody id="itemsTable"></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="receive" class="page">
+      <div class="panel">
+        <h3>Receive Stock</h3>
+        <form id="receiveForm" class="form-grid">
+          <label>Date<input required type="date" id="receiveDate" /></label>
+          <label>Supplier<select id="receiveSupplier"></select></label>
+          <label>Item<select required id="receiveItem"></select></label>
+          <label>Quantity Received<input required type="number" min="0.01" step="0.01" id="receiveQty" /></label>
+          <label>Unit Cost<input required type="number" min="0" step="0.01" id="receiveCost" /></label>
+          <label>Notes<input id="receiveNotes" /></label>
+          <button type="submit">Add Received Items</button>
+        </form>
+      </div>
+      <div class="panel"><h3>Received Items History</h3><div class="table-wrap"><table><thead><tr><th>Date</th><th>Supplier</th><th>Item</th><th>Qty</th><th>Unit Cost</th><th>Total</th><th>Action</th></tr></thead><tbody id="receiveTable"></tbody></table></div></div>
+    </section>
+
+    <section id="sales" class="page">
+      <div class="panel">
+        <h3>Record Sale</h3>
+        <form id="saleForm" class="form-grid">
+          <label>Date<input required type="date" id="saleDate" /></label>
+          <label>Customer<select id="saleCustomer"></select></label>
+          <label>Item<select required id="saleItem"></select></label>
+          <label>Quantity Sold<input required type="number" min="0.01" step="0.01" id="saleQty" /></label>
+          <label>Selling Price<input required type="number" min="0" step="0.01" id="salePrice" /></label>
+          <label>Payment Method<select id="salePayment"><option>Cash</option><option>Mobile Money</option><option>Bank</option><option>Credit</option></select></label>
+          <button type="submit">Save Sale</button>
+        </form>
+      </div>
+      <div class="panel"><h3>Sales History</h3><div class="table-wrap"><table><thead><tr><th>Date</th><th>Customer</th><th>Item</th><th>Qty</th><th>Sales</th><th>Cost</th><th>Profit</th><th>Action</th></tr></thead><tbody id="salesTable"></tbody></table></div></div>
+    </section>
+
+    <section id="expenses" class="page">
+      <div class="panel">
+        <h3>Record Expense</h3>
+        <form id="expenseForm" class="form-grid">
+          <label>Date<input required type="date" id="expenseDate" /></label>
+          <label>Category<select id="expenseCategory"><option>Transport</option><option>Rent</option><option>Wages</option><option>Utilities</option><option>Repairs</option><option>Other</option></select></label>
+          <label>Description<input required id="expenseDesc" /></label>
+          <label>Amount<input required type="number" min="0" step="0.01" id="expenseAmount" /></label>
+          <button type="submit">Save Expense</button>
+        </form>
+      </div>
+      <div class="panel"><h3>Expenses History</h3><div class="table-wrap"><table><thead><tr><th>Date</th><th>Category</th><th>Description</th><th>Amount</th><th>Action</th></tr></thead><tbody id="expensesTable"></tbody></table></div></div>
+    </section>
+
+    <section id="customers" class="page">
+      <div class="panel"><h3>Add Customer</h3><form id="customerForm" class="form-grid"><label>Name<input required id="customerName" /></label><label>Phone<input id="customerPhone" /></label><label>Address<input id="customerAddress" /></label><button>Save Customer</button></form></div>
+      <div class="panel"><h3>Customers</h3><div class="table-wrap"><table><thead><tr><th>Name</th><th>Phone</th><th>Address</th><th>Action</th></tr></thead><tbody id="customersTable"></tbody></table></div></div>
+    </section>
+
+    <section id="suppliers" class="page">
+      <div class="panel"><h3>Add Supplier</h3><form id="supplierForm" class="form-grid"><label>Name<input required id="supplierName" /></label><label>Phone<input id="supplierPhone" /></label><label>Address<input id="supplierAddress" /></label><button>Save Supplier</button></form></div>
+      <div class="panel"><h3>Suppliers</h3><div class="table-wrap"><table><thead><tr><th>Name</th><th>Phone</th><th>Address</th><th>Action</th></tr></thead><tbody id="suppliersTable"></tbody></table></div></div>
+    </section>
+
+    <section id="reports" class="page">
+      <div class="panel">
+        <h3>Profit / Loss Report</h3>
+        <form id="reportFilter" class="form-grid compact">
+          <label>From<input type="date" id="reportFrom" /></label>
+          <label>To<input type="date" id="reportTo" /></label>
+          <button type="submit">Filter Report</button>
+          <button type="button" class="secondary" id="exportCsv">Export CSV</button>
+        </form>
+        <div class="cards small">
+          <div class="card"><p>Sales</p><h3 id="reportSales">0</h3></div>
+          <div class="card"><p>Cost of Goods</p><h3 id="reportCost">0</h3></div>
+          <div class="card"><p>Expenses</p><h3 id="reportExpenses">0</h3></div>
+          <div class="card"><p>Profit/Loss</p><h3 id="reportProfit">0</h3></div>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th>Date</th><th>Sales</th><th>Received Items</th><th>Expenses</th><th>Gross Profit</th><th>Net Profit/Loss</th><th>Total Amount</th></tr></thead><tbody id="reportTable"></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="backup" class="page">
+      <div class="panel">
+        <h3>Backup / Restore</h3>
+        <p>Export your depot data, or restore a previous backup file.</p>
+        <button id="downloadBackup">Download Backup JSON</button>
+        <label class="upload">Restore Backup<input type="file" id="restoreBackup" accept="application/json" /></label>
+        <button class="danger" id="resetSystem">Reset System</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
