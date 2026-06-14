@@ -20,6 +20,7 @@
       <a href="#items" class="nav-link">Items / Stock</a>
       <a href="#receive" class="nav-link">Received Items</a>
       <a href="#sales" class="nav-link">Sales</a>
+      <a href="#receipts" class="nav-link">Receipts</a>
       <a href="#expenses" class="nav-link">Expenses</a>
       <a href="#customers" class="nav-link">Customers</a>
       <a href="#suppliers" class="nav-link">Suppliers</a>
@@ -69,6 +70,7 @@
           <label>Opening Quantity<input required type="number" min="0" step="0.01" id="itemQty" /></label>
           <label>Cost Price<input required type="number" min="0" step="0.01" id="itemCost" /></label>
           <label>Retail Price<input required type="number" min="0" step="0.01" id="itemRetail" /></label>
+          <label>Wholesale Price<input required type="number" min="0" step="0.01" id="itemWholesale" /></label>
           <label>Low Stock Alert<input type="number" min="0" step="0.01" id="itemAlert" value="5" /></label>
           <button type="submit">Save Item</button>
           <button type="button" class="secondary" id="clearItemForm">Clear</button>
@@ -77,7 +79,7 @@
       <div class="panel">
         <h3>Stock List</h3>
         <input class="search" id="itemSearch" placeholder="Search items..." />
-        <div class="table-wrap"><table><thead><tr><th>Item</th><th>Qty</th><th>Unit</th><th>Cost</th><th>Retail</th><th>Profit/Unit</th><th>Margin</th><th>Actions</th></tr></thead><tbody id="itemsTable"></tbody></table></div>
+        <div class="table-wrap"><table><thead><tr><th>Item</th><th>Qty</th><th>Unit</th><th>Cost</th><th>Retail</th><th>Wholesale</th><th>Retail Profit</th><th>Wholesale Profit</th><th>Margin</th><th>Actions</th></tr></thead><tbody id="itemsTable"></tbody></table></div>
       </div>
     </section>
 
@@ -105,12 +107,25 @@
           <label>Customer<select id="saleCustomer"></select></label>
           <label>Item<select required id="saleItem"></select></label>
           <label>Quantity Sold<input required type="number" min="0.01" step="0.01" id="saleQty" /></label>
+          <label>Price Type<select id="salePriceType"><option value="retail">Retail</option><option value="wholesale">Wholesale</option><option value="custom">Custom</option></select></label>
           <label>Selling Price<input required type="number" min="0" step="0.01" id="salePrice" /></label>
           <label>Payment Method<select id="salePayment"><option>Cash</option><option>Mobile Money</option><option>Bank</option><option>Credit</option></select></label>
           <button type="submit">Save Sale</button>
         </form>
       </div>
-      <div class="panel"><h3>Sales History</h3><div class="table-wrap"><table><thead><tr><th>Date</th><th>Customer</th><th>Item</th><th>Qty</th><th>Sales</th><th>Cost</th><th>Profit</th><th>Action</th></tr></thead><tbody id="salesTable"></tbody></table></div></div>
+      <div class="panel"><h3>Sales History</h3><div class="table-wrap"><table><thead><tr><th>Date</th><th>Customer</th><th>Item</th><th>Qty</th><th>Price Type</th><th>Sales</th><th>Cost</th><th>Profit</th><th>Receipt</th><th>Action</th></tr></thead><tbody id="salesTable"></tbody></table></div></div>
+    </section>
+
+    <section id="receipts" class="page">
+      <div class="panel">
+        <h3>Receipts</h3>
+        <p>View, print, or download customer receipts for all sales.</p>
+        <div class="table-wrap"><table><thead><tr><th>Date</th><th>Receipt No.</th><th>Customer</th><th>Item</th><th>Qty</th><th>Total</th><th>Actions</th></tr></thead><tbody id="receiptsTable"></tbody></table></div>
+      </div>
+      <div class="panel receipt-preview" id="receiptPreview">
+        <h3>Receipt Preview</h3>
+        <div id="receiptBox">Select a sale to preview receipt.</div>
+      </div>
     </section>
 
     <section id="expenses" class="page">
@@ -171,3 +186,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+
